@@ -58,6 +58,38 @@ namespace arithkit::laws {
     rc::prop("conjugation is involutive: conj(conj(z)) == z", [](C z) {
       RC_ASSERT(conjugate(conjugate(z)) == z);
     });
+
+    // Mixed scalar/complex operators — T embeds as a subring of Complex<T>
+
+    rc::prop("z + t == z + C(t)", [](C z1, C z2) {
+      auto t = z1.real();
+      RC_ASSERT(z2 + t == z2 + C(t));
+    });
+
+    rc::prop("t + z == C(t) + z", [](C z1, C z2) {
+      auto t = z1.real();
+      RC_ASSERT(t + z2 == C(t) + z2);
+    });
+
+    rc::prop("z - t == z - C(t)", [](C z1, C z2) {
+      auto t = z1.real();
+      RC_ASSERT(z2 - t == z2 - C(t));
+    });
+
+    rc::prop("t - z == C(t) - z", [](C z1, C z2) {
+      auto t = z1.real();
+      RC_ASSERT(t - z2 == C(t) - z2);
+    });
+
+    rc::prop("z * t == z * C(t)", [](C z1, C z2) {
+      auto t = z1.real();
+      RC_ASSERT(z2 * t == z2 * C(t));
+    });
+
+    rc::prop("t * z == C(t) * z", [](C z1, C z2) {
+      auto t = z1.real();
+      RC_ASSERT(t * z2 == C(t) * z2);
+    });
   }
 
 } // namespace arithkit::laws

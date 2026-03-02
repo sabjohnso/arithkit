@@ -101,6 +101,45 @@ namespace arithkit {
         (a.im_ * b.re_ - a.re_ * b.im_) / denom);
     }
 
+    // --- Mixed scalar/complex operators (T embeds as subring) ---
+
+    friend Complex
+    operator+(const Complex& z, const T& t) {
+      return z + Complex(t);
+    }
+    friend Complex
+    operator+(const T& t, const Complex& z) {
+      return Complex(t) + z;
+    }
+    friend Complex
+    operator-(const Complex& z, const T& t) {
+      return z - Complex(t);
+    }
+    friend Complex
+    operator-(const T& t, const Complex& z) {
+      return Complex(t) - z;
+    }
+    friend Complex
+    operator*(const Complex& z, const T& t) {
+      return z * Complex(t);
+    }
+    friend Complex
+    operator*(const T& t, const Complex& z) {
+      return Complex(t) * z;
+    }
+    friend Complex
+    operator/(const Complex& z, const T& t)
+      requires Field<T>
+    {
+      return z / Complex(t);
+    }
+    friend Complex
+    operator/(const T& t, const Complex& z)
+      requires Field<T>
+    {
+      return Complex(t) / z;
+    }
+
     // --- Compound assignment ---
 
     Complex&
@@ -120,6 +159,24 @@ namespace arithkit {
       requires Field<T>
     {
       return *this = *this / other;
+    }
+    Complex&
+    operator+=(const T& t) {
+      return *this = *this + t;
+    }
+    Complex&
+    operator-=(const T& t) {
+      return *this = *this - t;
+    }
+    Complex&
+    operator*=(const T& t) {
+      return *this = *this * t;
+    }
+    Complex&
+    operator/=(const T& t)
+      requires Field<T>
+    {
+      return *this = *this / t;
     }
 
     // --- Conjugate and norm ---

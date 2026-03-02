@@ -38,6 +38,22 @@ namespace arithkit::laws {
       auto zero_t = identity_v<T, additive_tag>();
       RC_ASSERT((z == zero_c) == (norm(z) == zero_t));
     });
+
+    // Mixed scalar/complex division — T is a subfield of Complex<T>
+
+    rc::prop("z / t == z / C(t)", [](C z1, C z2) {
+      auto t = z1.real();
+      auto zero_t = identity_v<T, additive_tag>();
+      RC_PRE(t != zero_t);
+      RC_ASSERT(z2 / t == z2 / C(t));
+    });
+
+    rc::prop("t / z == C(t) / z", [](C z1, C z2) {
+      auto t = z1.real();
+      auto zero_c = identity_v<C, additive_tag>();
+      RC_PRE(z2 != zero_c);
+      RC_ASSERT(t / z2 == C(t) / z2);
+    });
   }
 
 } // namespace arithkit::laws
