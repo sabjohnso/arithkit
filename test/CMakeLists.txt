@@ -6,7 +6,11 @@ macro(arithkit_add_test test_name)
   add_executable(${exe_name} ${src_name})
   target_link_libraries(${exe_name} PRIVATE
     arithkit::header
-    Catch2::Catch2WithMain)
+    Catch2::Catch2WithMain
+    rapidcheck)
+  target_include_directories(${exe_name} PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${rapidcheck_SOURCE_DIR}/extras/catch/include)
   set_target_properties(${exe_name}
     PROPERTIES
     CXX_STANDARD ${arithkit_CXX_STANDARD})
