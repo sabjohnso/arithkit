@@ -7,6 +7,7 @@
 #include <rapidcheck/catch.h>
 
 #include "laws/commutative_ring_laws.hpp"
+#include "laws/linear_augmentation_laws.hpp"
 
 using namespace arithkit;
 
@@ -153,4 +154,15 @@ TEST_CASE("Dual<int> satisfies CommutativeRing laws", "[laws][dual]") {
 TEST_CASE("Dual<Fraction<int>> satisfies CommutativeRing laws",
           "[laws][dual]") {
   arithkit::laws::check_commutative_ring<Dq>();
+}
+
+TEST_CASE(
+  "Dual<int> satisfies LinearAugmentation ring laws", "[laws][dual]") {
+  arithkit::laws::check_linear_augmentation_ring<int>();
+}
+
+TEST_CASE(
+  "Dual<Fraction<int>> satisfies LinearAugmentation field laws",
+  "[laws][dual]") {
+  arithkit::laws::check_linear_augmentation_field<Fraction<int>>();
 }

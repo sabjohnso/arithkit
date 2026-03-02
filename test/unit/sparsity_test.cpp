@@ -4,6 +4,8 @@
 #include <rapidcheck.h>
 #include <rapidcheck/catch.h>
 
+#include "laws/monoid_augmentation_laws.hpp"
+
 #include <algorithm>
 #include <set>
 
@@ -247,4 +249,10 @@ TEST_CASE(
   rc::prop("indices(a + b) == indices(b + a)", [](Sd a, Sd b) {
     RC_ASSERT((a + b).indices() == (b + a).indices());
   });
+}
+
+TEST_CASE(
+  "Sparsity<double> satisfies MonoidAugmentation laws",
+  "[laws][sparsity]") {
+  arithkit::laws::check_monoid_augmentation<double>();
 }
