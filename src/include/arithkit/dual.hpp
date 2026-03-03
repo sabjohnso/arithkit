@@ -22,59 +22,59 @@ namespace arithkit {
   public:
     // --- Construction ---
 
-    Dual()
+    constexpr Dual()
         : re_(identity_v<T, additive_tag>())
         , du_(identity_v<T, additive_tag>()) {}
 
-    explicit Dual(T re)
+    constexpr explicit Dual(T re)
         : re_(std::move(re))
         , du_(identity_v<T, additive_tag>()) {}
 
-    Dual(T re, T du)
+    constexpr Dual(T re, T du)
         : re_(std::move(re))
         , du_(std::move(du)) {}
 
     // --- Accessors ---
 
-    [[nodiscard]] const T&
+    [[nodiscard]] constexpr const T&
     real() const {
       return re_;
     }
 
-    [[nodiscard]] const T&
+    [[nodiscard]] constexpr const T&
     dual() const {
       return du_;
     }
 
     // --- Comparison ---
 
-    friend bool
+    friend constexpr bool
     operator==(const Dual& a, const Dual& b) {
       return a.re_ == b.re_ && a.du_ == b.du_;
     }
 
     // --- Unary ---
 
-    Dual
+    constexpr Dual
     operator-() const {
       return Dual(-re_, -du_);
     }
 
-    Dual
+    constexpr Dual
     operator+() const {
       return *this;
     }
 
     // --- Addition ---
 
-    friend Dual
+    friend constexpr Dual
     operator+(const Dual& a, const Dual& b) {
       return Dual(a.re_ + b.re_, a.du_ + b.du_);
     }
 
     // --- Subtraction ---
 
-    friend Dual
+    friend constexpr Dual
     operator-(const Dual& a, const Dual& b) {
       return Dual(a.re_ - b.re_, a.du_ - b.du_);
     }
@@ -82,7 +82,7 @@ namespace arithkit {
     // --- Multiplication ---
     // (a+bε)(c+dε) = ac + (ad+bc)ε  (since ε²=0)
 
-    friend Dual
+    friend constexpr Dual
     operator*(const Dual& a, const Dual& b) {
       return Dual(a.re_ * b.re_, a.re_ * b.du_ + a.du_ * b.re_);
     }
@@ -91,27 +91,27 @@ namespace arithkit {
 
     // --- Mixed scalar/dual operators (T embeds as subring t ↦ (t,0)) ---
 
-    friend Dual
+    friend constexpr Dual
     operator+(const Dual& z, const T& t) {
       return z + Dual(t);
     }
-    friend Dual
+    friend constexpr Dual
     operator+(const T& t, const Dual& z) {
       return Dual(t) + z;
     }
-    friend Dual
+    friend constexpr Dual
     operator-(const Dual& z, const T& t) {
       return z - Dual(t);
     }
-    friend Dual
+    friend constexpr Dual
     operator-(const T& t, const Dual& z) {
       return Dual(t) - z;
     }
-    friend Dual
+    friend constexpr Dual
     operator*(const Dual& z, const T& t) {
       return z * Dual(t);
     }
-    friend Dual
+    friend constexpr Dual
     operator*(const T& t, const Dual& z) {
       return Dual(t) * z;
     }
@@ -160,7 +160,7 @@ namespace arithkit {
 
   template <CommutativeRing T>
   struct identity_element<Dual<T>, additive_tag> {
-    static Dual<T>
+    static constexpr Dual<T>
     make() {
       return Dual<T>();
     }
@@ -168,7 +168,7 @@ namespace arithkit {
 
   template <CommutativeRing T>
   struct identity_element<Dual<T>, multiplicative_tag> {
-    static Dual<T>
+    static constexpr Dual<T>
     make() {
       return Dual<T>(identity_v<T, multiplicative_tag>());
     }

@@ -20,33 +20,33 @@ namespace arithkit {
   public:
     // --- Construction ---
 
-    Complex()
+    constexpr Complex()
         : re_(identity_v<T, additive_tag>())
         , im_(identity_v<T, additive_tag>()) {}
 
-    explicit Complex(T re)
+    constexpr explicit Complex(T re)
         : re_(std::move(re))
         , im_(identity_v<T, additive_tag>()) {}
 
-    Complex(T re, T im)
+    constexpr Complex(T re, T im)
         : re_(std::move(re))
         , im_(std::move(im)) {}
 
     // --- Accessors ---
 
-    [[nodiscard]] const T&
+    [[nodiscard]] constexpr const T&
     real() const {
       return re_;
     }
 
-    [[nodiscard]] const T&
+    [[nodiscard]] constexpr const T&
     imag() const {
       return im_;
     }
 
     // --- Comparison ---
 
-    friend bool
+    friend constexpr bool
     operator==(const Complex& a, const Complex& b) {
       return a.re_ == b.re_ && a.im_ == b.im_;
     }
@@ -55,26 +55,26 @@ namespace arithkit {
 
     // --- Unary ---
 
-    Complex
+    constexpr Complex
     operator-() const {
       return Complex(-re_, -im_);
     }
 
-    Complex
+    constexpr Complex
     operator+() const {
       return *this;
     }
 
     // --- Addition ---
 
-    friend Complex
+    friend constexpr Complex
     operator+(const Complex& a, const Complex& b) {
       return Complex(a.re_ + b.re_, a.im_ + b.im_);
     }
 
     // --- Subtraction ---
 
-    friend Complex
+    friend constexpr Complex
     operator-(const Complex& a, const Complex& b) {
       return Complex(a.re_ - b.re_, a.im_ - b.im_);
     }
@@ -82,7 +82,7 @@ namespace arithkit {
     // --- Multiplication ---
     // (a+bi)(c+di) = (ac-bd) + (ad+bc)i
 
-    friend Complex
+    friend constexpr Complex
     operator*(const Complex& a, const Complex& b) {
       return Complex(
         a.re_ * b.re_ - a.im_ * b.im_, a.re_ * b.im_ + a.im_ * b.re_);
@@ -91,7 +91,7 @@ namespace arithkit {
     // --- Division (requires Field) ---
     // (a+bi)/(c+di) = ((ac+bd) + (bc-ad)i) / (c²+d²)
 
-    friend Complex
+    friend constexpr Complex
     operator/(const Complex& a, const Complex& b)
       requires Field<T>
     {
@@ -103,37 +103,37 @@ namespace arithkit {
 
     // --- Mixed scalar/complex operators (T embeds as subring) ---
 
-    friend Complex
+    friend constexpr Complex
     operator+(const Complex& z, const T& t) {
       return z + Complex(t);
     }
-    friend Complex
+    friend constexpr Complex
     operator+(const T& t, const Complex& z) {
       return Complex(t) + z;
     }
-    friend Complex
+    friend constexpr Complex
     operator-(const Complex& z, const T& t) {
       return z - Complex(t);
     }
-    friend Complex
+    friend constexpr Complex
     operator-(const T& t, const Complex& z) {
       return Complex(t) - z;
     }
-    friend Complex
+    friend constexpr Complex
     operator*(const Complex& z, const T& t) {
       return z * Complex(t);
     }
-    friend Complex
+    friend constexpr Complex
     operator*(const T& t, const Complex& z) {
       return Complex(t) * z;
     }
-    friend Complex
+    friend constexpr Complex
     operator/(const Complex& z, const T& t)
       requires Field<T>
     {
       return z / Complex(t);
     }
-    friend Complex
+    friend constexpr Complex
     operator/(const T& t, const Complex& z)
       requires Field<T>
     {
@@ -181,14 +181,14 @@ namespace arithkit {
 
     // --- Conjugate and norm ---
 
-    friend Complex
+    friend constexpr Complex
     conjugate(const Complex& z) {
       return Complex(z.re_, -z.im_);
     }
 
     /// Norm (squared magnitude): |z|² = a² + b²
     /// Returns a value of the component type T.
-    friend T
+    friend constexpr T
     norm(const Complex& z) {
       return z.re_ * z.re_ + z.im_ * z.im_;
     }
@@ -210,7 +210,7 @@ namespace arithkit {
 
   template <Ring T>
   struct identity_element<Complex<T>, additive_tag> {
-    static Complex<T>
+    static constexpr Complex<T>
     make() {
       return Complex<T>();
     }
@@ -218,7 +218,7 @@ namespace arithkit {
 
   template <Ring T>
   struct identity_element<Complex<T>, multiplicative_tag> {
-    static Complex<T>
+    static constexpr Complex<T>
     make() {
       return Complex<T>(identity_v<T, multiplicative_tag>());
     }

@@ -24,14 +24,14 @@ namespace arithkit {
   public:
     // --- Construction ---
 
-    Simd() {
+    constexpr Simd() {
       auto zero = identity_v<T, additive_tag>();
       data_.fill(zero);
     }
 
-    explicit Simd(T scalar) { data_.fill(scalar); }
+    constexpr explicit Simd(T scalar) { data_.fill(scalar); }
 
-    explicit Simd(std::array<T, N> data)
+    constexpr explicit Simd(std::array<T, N> data)
         : data_(std::move(data)) {}
 
     /// Construct from exactly N individual values, one per lane.
@@ -39,36 +39,36 @@ namespace arithkit {
     /// ambiguity with the scalar broadcast constructor.
     template <std::same_as<T>... Ts>
       requires(sizeof...(Ts) == N && sizeof...(Ts) >= 2)
-    explicit Simd(Ts... values)
+    constexpr explicit Simd(Ts... values)
         : data_{values...} {}
 
     // --- Accessors ---
 
-    [[nodiscard]] const T&
+    [[nodiscard]] constexpr const T&
     operator[](std::size_t i) const {
       return data_[i];
     }
 
-    [[nodiscard]] T&
+    [[nodiscard]] constexpr T&
     operator[](std::size_t i) {
       return data_[i];
     }
 
     // --- Comparison ---
 
-    friend bool
+    friend constexpr bool
     operator==(const Simd& a, const Simd& b) {
       return a.data_ == b.data_;
     }
 
-    friend auto
+    friend constexpr auto
     operator<=>(const Simd& a, const Simd& b) {
       return a.data_ <=> b.data_;
     }
 
     // --- Unary ---
 
-    Simd
+    constexpr Simd
     operator-() const {
       Simd result;
       for (std::size_t i = 0; i < N; ++i) {
@@ -77,14 +77,14 @@ namespace arithkit {
       return result;
     }
 
-    Simd
+    constexpr Simd
     operator+() const {
       return *this;
     }
 
     // --- Addition ---
 
-    friend Simd
+    friend constexpr Simd
     operator+(const Simd& a, const Simd& b) {
       Simd result;
       for (std::size_t i = 0; i < N; ++i) {
@@ -95,7 +95,7 @@ namespace arithkit {
 
     // --- Subtraction ---
 
-    friend Simd
+    friend constexpr Simd
     operator-(const Simd& a, const Simd& b) {
       Simd result;
       for (std::size_t i = 0; i < N; ++i) {
@@ -106,7 +106,7 @@ namespace arithkit {
 
     // --- Multiplication ---
 
-    friend Simd
+    friend constexpr Simd
     operator*(const Simd& a, const Simd& b) {
       Simd result;
       for (std::size_t i = 0; i < N; ++i) {
@@ -117,7 +117,7 @@ namespace arithkit {
 
     // --- Division ---
 
-    friend Simd
+    friend constexpr Simd
     operator/(const Simd& a, const Simd& b) {
       Simd result;
       for (std::size_t i = 0; i < N; ++i) {
@@ -187,7 +187,7 @@ namespace arithkit {
 
   template <typename T, std::size_t N>
   struct identity_element<Simd<T, N>, additive_tag> {
-    static Simd<T, N>
+    static constexpr Simd<T, N>
     make() {
       return Simd<T, N>();
     }
@@ -195,7 +195,7 @@ namespace arithkit {
 
   template <typename T, std::size_t N>
   struct identity_element<Simd<T, N>, multiplicative_tag> {
-    static Simd<T, N>
+    static constexpr Simd<T, N>
     make() {
       return Simd<T, N>(identity_v<T, multiplicative_tag>());
     }

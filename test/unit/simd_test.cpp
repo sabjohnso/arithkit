@@ -20,6 +20,12 @@ using S2i = Simd<int, 2>;
 static_assert(CommutativeRing<S4d>);
 static_assert(CommutativeRing<S2i>);
 
+// --- constexpr checks ---
+static_assert(
+  Simd<int, 4>(1, 2, 3, 4) + Simd<int, 4>(5, 6, 7, 8) ==
+  Simd<int, 4>(6, 8, 10, 12));
+static_assert(Simd<int, 2>(3, 3) == Simd<int, 2>(3, 3));
+
 // --- RapidCheck generators ---
 
 namespace rc {

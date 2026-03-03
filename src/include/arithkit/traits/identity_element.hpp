@@ -26,7 +26,7 @@ namespace arithkit {
   /// Delegates to identity_element<T, OpTag>::make() so each call
   /// constructs the value on demand — no static storage, no SIOF.
   template <typename T, typename OpTag>
-  T
+  constexpr T
   identity_v() {
     return identity_element<T, OpTag>::make();
   }

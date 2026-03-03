@@ -20,6 +20,12 @@ static_assert(Ring<G1>);
 static_assert(Ring<G2>);
 static_assert(Ring<G3>);
 
+// --- constexpr checks ---
+static_assert(
+  Grassmann<double, 2>(1.0) + Grassmann<double, 2>(2.0) ==
+  Grassmann<double, 2>(3.0));
+static_assert(Grassmann<double, 2>() == Grassmann<double, 2>(0.0));
+
 // --- RapidCheck generators ---
 
 namespace rc {

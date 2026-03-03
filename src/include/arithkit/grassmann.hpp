@@ -61,28 +61,28 @@ namespace arithkit {
   public:
     // --- Construction ---
 
-    Grassmann() {
+    constexpr Grassmann() {
       auto zero = identity_v<T, additive_tag>();
       coeffs_.fill(zero);
     }
 
-    explicit Grassmann(T scalar) {
+    constexpr explicit Grassmann(T scalar) {
       auto zero = identity_v<T, additive_tag>();
       coeffs_.fill(zero);
       coeffs_[0] = std::move(scalar);
     }
 
-    explicit Grassmann(std::array<T, DIM> coeffs)
+    constexpr explicit Grassmann(std::array<T, DIM> coeffs)
         : coeffs_(std::move(coeffs)) {}
 
     // --- Accessors ---
 
-    [[nodiscard]] const T&
+    [[nodiscard]] constexpr const T&
     operator[](std::size_t i) const {
       return coeffs_[i];
     }
 
-    [[nodiscard]] T&
+    [[nodiscard]] constexpr T&
     operator[](std::size_t i) {
       return coeffs_[i];
     }
@@ -94,14 +94,14 @@ namespace arithkit {
 
     // --- Comparison ---
 
-    friend bool
+    friend constexpr bool
     operator==(const Grassmann& a, const Grassmann& b) {
       return a.coeffs_ == b.coeffs_;
     }
 
     // --- Unary ---
 
-    Grassmann
+    constexpr Grassmann
     operator-() const {
       Grassmann result;
       for (std::size_t i = 0; i < DIM; ++i) {
@@ -110,14 +110,14 @@ namespace arithkit {
       return result;
     }
 
-    Grassmann
+    constexpr Grassmann
     operator+() const {
       return *this;
     }
 
     // --- Addition ---
 
-    friend Grassmann
+    friend constexpr Grassmann
     operator+(const Grassmann& a, const Grassmann& b) {
       Grassmann result;
       for (std::size_t i = 0; i < DIM; ++i) {
@@ -128,7 +128,7 @@ namespace arithkit {
 
     // --- Subtraction ---
 
-    friend Grassmann
+    friend constexpr Grassmann
     operator-(const Grassmann& a, const Grassmann& b) {
       Grassmann result;
       for (std::size_t i = 0; i < DIM; ++i) {
@@ -139,7 +139,7 @@ namespace arithkit {
 
     // --- Multiplication (wedge product) ---
 
-    friend Grassmann
+    friend constexpr Grassmann
     operator*(const Grassmann& a, const Grassmann& b) {
       Grassmann result;
       for (unsigned i = 0; i < DIM; ++i) {
@@ -194,7 +194,7 @@ namespace arithkit {
 
   template <Field T, unsigned N>
   struct identity_element<Grassmann<T, N>, additive_tag> {
-    static Grassmann<T, N>
+    static constexpr Grassmann<T, N>
     make() {
       return Grassmann<T, N>();
     }
@@ -202,7 +202,7 @@ namespace arithkit {
 
   template <Field T, unsigned N>
   struct identity_element<Grassmann<T, N>, multiplicative_tag> {
-    static Grassmann<T, N>
+    static constexpr Grassmann<T, N>
     make() {
       return Grassmann<T, N>(identity_v<T, multiplicative_tag>());
     }

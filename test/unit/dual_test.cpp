@@ -24,6 +24,10 @@ static_assert(CommutativeRing<Dq>);
 // Dual is NOT a field — ε is a zero divisor (ε² = 0)
 static_assert(!Field<Dd>);
 
+// --- constexpr checks ---
+static_assert(Dual<int>(3, 4) + Dual<int>(1, 2) == Dual<int>(4, 6));
+static_assert(Dual<int>(3, 4) * Dual<int>(1, 2) == Dual<int>(3, 10));
+
 // --- RapidCheck generators ---
 
 namespace rc {

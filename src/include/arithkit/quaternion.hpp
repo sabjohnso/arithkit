@@ -20,19 +20,19 @@ namespace arithkit {
   public:
     // --- Construction ---
 
-    Quaternion()
+    constexpr Quaternion()
         : w_(identity_v<T, additive_tag>())
         , x_(identity_v<T, additive_tag>())
         , y_(identity_v<T, additive_tag>())
         , z_(identity_v<T, additive_tag>()) {}
 
-    explicit Quaternion(T w)
+    constexpr explicit Quaternion(T w)
         : w_(std::move(w))
         , x_(identity_v<T, additive_tag>())
         , y_(identity_v<T, additive_tag>())
         , z_(identity_v<T, additive_tag>()) {}
 
-    Quaternion(T w, T x, T y, T z)
+    constexpr Quaternion(T w, T x, T y, T z)
         : w_(std::move(w))
         , x_(std::move(x))
         , y_(std::move(y))
@@ -40,26 +40,26 @@ namespace arithkit {
 
     // --- Accessors ---
 
-    [[nodiscard]] const T&
+    [[nodiscard]] constexpr const T&
     w() const {
       return w_;
     }
-    [[nodiscard]] const T&
+    [[nodiscard]] constexpr const T&
     x() const {
       return x_;
     }
-    [[nodiscard]] const T&
+    [[nodiscard]] constexpr const T&
     y() const {
       return y_;
     }
-    [[nodiscard]] const T&
+    [[nodiscard]] constexpr const T&
     z() const {
       return z_;
     }
 
     // --- Comparison ---
 
-    friend bool
+    friend constexpr bool
     operator==(const Quaternion& a, const Quaternion& b) {
       return a.w_ == b.w_ && a.x_ == b.x_ && a.y_ == b.y_ && a.z_ == b.z_;
     }
@@ -68,26 +68,26 @@ namespace arithkit {
 
     // --- Unary ---
 
-    Quaternion
+    constexpr Quaternion
     operator-() const {
       return Quaternion(-w_, -x_, -y_, -z_);
     }
 
-    Quaternion
+    constexpr Quaternion
     operator+() const {
       return *this;
     }
 
     // --- Addition ---
 
-    friend Quaternion
+    friend constexpr Quaternion
     operator+(const Quaternion& a, const Quaternion& b) {
       return Quaternion(a.w_ + b.w_, a.x_ + b.x_, a.y_ + b.y_, a.z_ + b.z_);
     }
 
     // --- Subtraction ---
 
-    friend Quaternion
+    friend constexpr Quaternion
     operator-(const Quaternion& a, const Quaternion& b) {
       return Quaternion(a.w_ - b.w_, a.x_ - b.x_, a.y_ - b.y_, a.z_ - b.z_);
     }
@@ -99,7 +99,7 @@ namespace arithkit {
     // + (a₁c₂ - b₁d₂ + c₁a₂ + d₁b₂)j
     // + (a₁d₂ + b₁c₂ - c₁b₂ + d₁a₂)k
 
-    friend Quaternion
+    friend constexpr Quaternion
     operator*(const Quaternion& a, const Quaternion& b) {
       return Quaternion(
         a.w_ * b.w_ - a.x_ * b.x_ - a.y_ * b.y_ - a.z_ * b.z_,
@@ -111,7 +111,7 @@ namespace arithkit {
     // --- Division ---
     // a / b = a * b⁻¹ where b⁻¹ = conj(b) / norm(b)
 
-    friend Quaternion
+    friend constexpr Quaternion
     operator/(const Quaternion& a, const Quaternion& b) {
       auto n = norm(b);
       auto conj_b = conjugate(b);
@@ -142,13 +142,13 @@ namespace arithkit {
 
     // --- Conjugate and norm ---
 
-    friend Quaternion
+    friend constexpr Quaternion
     conjugate(const Quaternion& q) {
       return Quaternion(q.w_, -q.x_, -q.y_, -q.z_);
     }
 
     /// Norm (squared magnitude): |q|² = w²+x²+y²+z²
-    friend T
+    friend constexpr T
     norm(const Quaternion& q) {
       return q.w_ * q.w_ + q.x_ * q.x_ + q.y_ * q.y_ + q.z_ * q.z_;
     }
@@ -169,7 +169,7 @@ namespace arithkit {
 
   template <Field T>
   struct identity_element<Quaternion<T>, additive_tag> {
-    static Quaternion<T>
+    static constexpr Quaternion<T>
     make() {
       return Quaternion<T>();
     }
@@ -177,7 +177,7 @@ namespace arithkit {
 
   template <Field T>
   struct identity_element<Quaternion<T>, multiplicative_tag> {
-    static Quaternion<T>
+    static constexpr Quaternion<T>
     make() {
       return Quaternion<T>(identity_v<T, multiplicative_tag>());
     }

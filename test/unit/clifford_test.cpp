@@ -24,6 +24,12 @@ static_assert(Ring<Cl01>);
 static_assert(Ring<Cl02>);
 static_assert(Ring<Cl10>);
 
+// --- constexpr checks ---
+static_assert(
+  Clifford<double, 1, 0>(1.0) + Clifford<double, 1, 0>(2.0) ==
+  Clifford<double, 1, 0>(3.0));
+static_assert(Clifford<double, 1, 0>() == Clifford<double, 1, 0>(0.0));
+
 // --- RapidCheck generators ---
 
 namespace rc {

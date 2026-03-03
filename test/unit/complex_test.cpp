@@ -30,6 +30,10 @@ static_assert(Field<CbigQ>);
 // Complex is NOT ordered (no total order on complex numbers)
 static_assert(!std::totally_ordered<Cd>);
 
+// --- constexpr checks ---
+static_assert(Complex<int>(3, 4) + Complex<int>(1, -2) == Complex<int>(4, 2));
+static_assert(Complex<int>(3, 4) * Complex<int>(1, -2) == Complex<int>(11, -2));
+
 // --- RapidCheck generators ---
 
 namespace rc {

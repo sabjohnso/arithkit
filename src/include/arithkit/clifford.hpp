@@ -94,28 +94,28 @@ namespace arithkit {
   public:
     // --- Construction ---
 
-    Clifford() {
+    constexpr Clifford() {
       auto zero = identity_v<T, additive_tag>();
       coeffs_.fill(zero);
     }
 
-    explicit Clifford(T scalar) {
+    constexpr explicit Clifford(T scalar) {
       auto zero = identity_v<T, additive_tag>();
       coeffs_.fill(zero);
       coeffs_[0] = std::move(scalar);
     }
 
-    explicit Clifford(std::array<T, DIM> coeffs)
+    constexpr explicit Clifford(std::array<T, DIM> coeffs)
         : coeffs_(std::move(coeffs)) {}
 
     // --- Accessors ---
 
-    [[nodiscard]] const T&
+    [[nodiscard]] constexpr const T&
     operator[](std::size_t i) const {
       return coeffs_[i];
     }
 
-    [[nodiscard]] T&
+    [[nodiscard]] constexpr T&
     operator[](std::size_t i) {
       return coeffs_[i];
     }
@@ -127,14 +127,14 @@ namespace arithkit {
 
     // --- Comparison ---
 
-    friend bool
+    friend constexpr bool
     operator==(const Clifford& a, const Clifford& b) {
       return a.coeffs_ == b.coeffs_;
     }
 
     // --- Unary ---
 
-    Clifford
+    constexpr Clifford
     operator-() const {
       Clifford result;
       for (std::size_t i = 0; i < DIM; ++i) {
@@ -143,14 +143,14 @@ namespace arithkit {
       return result;
     }
 
-    Clifford
+    constexpr Clifford
     operator+() const {
       return *this;
     }
 
     // --- Addition ---
 
-    friend Clifford
+    friend constexpr Clifford
     operator+(const Clifford& a, const Clifford& b) {
       Clifford result;
       for (std::size_t i = 0; i < DIM; ++i) {
@@ -161,7 +161,7 @@ namespace arithkit {
 
     // --- Subtraction ---
 
-    friend Clifford
+    friend constexpr Clifford
     operator-(const Clifford& a, const Clifford& b) {
       Clifford result;
       for (std::size_t i = 0; i < DIM; ++i) {
@@ -172,7 +172,7 @@ namespace arithkit {
 
     // --- Multiplication (geometric product) ---
 
-    friend Clifford
+    friend constexpr Clifford
     operator*(const Clifford& a, const Clifford& b) {
       Clifford result;
       for (unsigned i = 0; i < DIM; ++i) {
@@ -226,7 +226,7 @@ namespace arithkit {
 
   template <Field T, unsigned P, unsigned Q>
   struct identity_element<Clifford<T, P, Q>, additive_tag> {
-    static Clifford<T, P, Q>
+    static constexpr Clifford<T, P, Q>
     make() {
       return Clifford<T, P, Q>();
     }
@@ -234,7 +234,7 @@ namespace arithkit {
 
   template <Field T, unsigned P, unsigned Q>
   struct identity_element<Clifford<T, P, Q>, multiplicative_tag> {
-    static Clifford<T, P, Q>
+    static constexpr Clifford<T, P, Q>
     make() {
       return Clifford<T, P, Q>(identity_v<T, multiplicative_tag>());
     }

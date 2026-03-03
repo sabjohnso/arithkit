@@ -27,6 +27,12 @@ static_assert(DivisionRing<Qq>);
 // Not ordered
 static_assert(!std::totally_ordered<Qd>);
 
+// --- constexpr checks ---
+static_assert(
+  Quaternion<double>(1, 0, 0, 0) + Quaternion<double>(0, 1, 0, 0) ==
+  Quaternion<double>(1, 1, 0, 0));
+static_assert(Quaternion<double>(1, 0, 0, 0) == Quaternion<double>(1, 0, 0, 0));
+
 // --- RapidCheck generators ---
 
 namespace rc {

@@ -20,6 +20,12 @@ static_assert(IntervalArithmetic<Ivd>);
 // subdistributivity holds).  This is tested by property tests, not
 // static_assert.
 
+// --- constexpr checks ---
+static_assert(
+  Interval<double>(1.0, 3.0) + Interval<double>(2.0, 4.0) ==
+  Interval<double>(3.0, 7.0));
+static_assert(Interval<double>().lo() == 0.0);
+
 // --- RapidCheck generators ---
 
 namespace rc {
