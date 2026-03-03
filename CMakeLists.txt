@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(arithkit VERSION 0.1.0 LANGUAGES C CXX)
+project(arithkit VERSION 0.2.0 LANGUAGES C CXX)
 
 option(arithkit_BUILD_TESTING "Build the arithkit tests" ON)
 set(arithkit_CXX_STANDARD 20 CACHE STRING "C++ standard for arithkit")

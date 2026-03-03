@@ -5,21 +5,18 @@
 ///        multiplicative identity.
 ///
 /// Laws (enforced by property tests):
+///   associativity: (a * b) * c == a * (b * c)
 ///   identity: a * 1 == a && 1 * a == a
 ///
-/// The identity element is provided by
-/// identity_element<T, multiplicative_tag>.
+/// Equivalent to MultiplicativeSemigroup && MultiplicativeUnitalMagma.
 
 #include <arithkit/concepts/multiplicative_semigroup.hpp>
-#include <arithkit/traits/identity_element.hpp>
+#include <arithkit/concepts/multiplicative_unital_magma.hpp>
 
 namespace arithkit {
 
   template <typename T>
-  concept MultiplicativeMonoid = MultiplicativeSemigroup<T> && requires {
-    {
-      identity_element<T, multiplicative_tag>::make()
-    } -> std::convertible_to<T>;
-  };
+  concept MultiplicativeMonoid =
+    MultiplicativeSemigroup<T> && MultiplicativeUnitalMagma<T>;
 
 } // namespace arithkit
