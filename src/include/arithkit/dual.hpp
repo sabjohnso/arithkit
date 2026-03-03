@@ -89,6 +89,33 @@ namespace arithkit {
 
     // No operator/ — Dual is NOT a field (ε is a zero divisor).
 
+    // --- Mixed scalar/dual operators (T embeds as subring t ↦ (t,0)) ---
+
+    friend Dual
+    operator+(const Dual& z, const T& t) {
+      return z + Dual(t);
+    }
+    friend Dual
+    operator+(const T& t, const Dual& z) {
+      return Dual(t) + z;
+    }
+    friend Dual
+    operator-(const Dual& z, const T& t) {
+      return z - Dual(t);
+    }
+    friend Dual
+    operator-(const T& t, const Dual& z) {
+      return Dual(t) - z;
+    }
+    friend Dual
+    operator*(const Dual& z, const T& t) {
+      return z * Dual(t);
+    }
+    friend Dual
+    operator*(const T& t, const Dual& z) {
+      return Dual(t) * z;
+    }
+
     // --- Compound assignment ---
 
     Dual&
@@ -102,6 +129,18 @@ namespace arithkit {
     Dual&
     operator*=(const Dual& other) {
       return *this = *this * other;
+    }
+    Dual&
+    operator+=(const T& t) {
+      return *this = *this + t;
+    }
+    Dual&
+    operator-=(const T& t) {
+      return *this = *this - t;
+    }
+    Dual&
+    operator*=(const T& t) {
+      return *this = *this * t;
     }
 
     // --- Stream output ---

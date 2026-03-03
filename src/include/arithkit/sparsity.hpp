@@ -87,6 +87,45 @@ namespace arithkit {
       return Sparsity(a.value_ / b.value_, union_of(a.indices_, b.indices_));
     }
 
+    // --- Mixed scalar/sparsity operators (scalar t ≡ Sparsity(t)) ---
+
+    friend Sparsity
+    operator+(const Sparsity& z, const T& t) {
+      return z + Sparsity(t);
+    }
+    friend Sparsity
+    operator+(const T& t, const Sparsity& z) {
+      return Sparsity(t) + z;
+    }
+    friend Sparsity
+    operator-(const Sparsity& z, const T& t) {
+      return z - Sparsity(t);
+    }
+    friend Sparsity
+    operator-(const T& t, const Sparsity& z) {
+      return Sparsity(t) - z;
+    }
+    friend Sparsity
+    operator*(const Sparsity& z, const T& t) {
+      return z * Sparsity(t);
+    }
+    friend Sparsity
+    operator*(const T& t, const Sparsity& z) {
+      return Sparsity(t) * z;
+    }
+    friend Sparsity
+    operator/(const Sparsity& z, const T& t)
+      requires requires(T x, T y) { x / y; }
+    {
+      return z / Sparsity(t);
+    }
+    friend Sparsity
+    operator/(const T& t, const Sparsity& z)
+      requires requires(T x, T y) { x / y; }
+    {
+      return Sparsity(t) / z;
+    }
+
     // --- Compound assignment ---
 
     Sparsity&
@@ -107,6 +146,28 @@ namespace arithkit {
     Sparsity&
     operator/=(const Sparsity& other) {
       return *this = *this / other;
+    }
+
+    Sparsity&
+    operator+=(const T& t) {
+      return *this = *this + t;
+    }
+
+    Sparsity&
+    operator-=(const T& t) {
+      return *this = *this - t;
+    }
+
+    Sparsity&
+    operator*=(const T& t) {
+      return *this = *this * t;
+    }
+
+    Sparsity&
+    operator/=(const T& t)
+      requires requires(T x, T y) { x / y; }
+    {
+      return *this = *this / t;
     }
 
     // --- Equality ---

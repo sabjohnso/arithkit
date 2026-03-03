@@ -108,6 +108,50 @@ namespace arithkit::laws {
       RC_PRE(b.value() != T{});
       RC_ASSERT((a / b).value() == a.value() / b.value());
     });
+
+    // --- Mixed scalar/sparsity operator laws (scalar t ≡ Sparsity(t)) ---
+
+    rc::prop("mixed +: z + t == z + E(t)", [](E z, E s) {
+      auto t = s.value();
+      RC_ASSERT(z + t == z + E(t));
+    });
+
+    rc::prop("mixed +: t + z == E(t) + z", [](E z, E s) {
+      auto t = s.value();
+      RC_ASSERT(t + z == E(t) + z);
+    });
+
+    rc::prop("mixed -: z - t == z - E(t)", [](E z, E s) {
+      auto t = s.value();
+      RC_ASSERT(z - t == z - E(t));
+    });
+
+    rc::prop("mixed -: t - z == E(t) - z", [](E z, E s) {
+      auto t = s.value();
+      RC_ASSERT(t - z == E(t) - z);
+    });
+
+    rc::prop("mixed *: z * t == z * E(t)", [](E z, E s) {
+      auto t = s.value();
+      RC_ASSERT(z * t == z * E(t));
+    });
+
+    rc::prop("mixed *: t * z == E(t) * z", [](E z, E s) {
+      auto t = s.value();
+      RC_ASSERT(t * z == E(t) * z);
+    });
+
+    rc::prop("mixed /: z / t == z / E(t)", [](E z, E s) {
+      auto t = s.value();
+      RC_PRE(t != T{});
+      RC_ASSERT(z / t == z / E(t));
+    });
+
+    rc::prop("mixed /: t / z == E(t) / z", [](E z, E s) {
+      auto t = s.value();
+      RC_PRE(z.value() != T{});
+      RC_ASSERT(t / z == E(t) / z);
+    });
   }
 
 } // namespace arithkit::laws

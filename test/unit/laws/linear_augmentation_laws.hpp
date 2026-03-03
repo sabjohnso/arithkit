@@ -58,6 +58,38 @@ namespace arithkit::laws {
       auto b = z2.real();
       RC_ASSERT(E(a * b) == E(a) * E(b));
     });
+
+    // --- Mixed scalar/dual operator laws (T embeds as subring t ↦ (t,0)) ---
+
+    rc::prop("mixed +: z + t == z + E(t)", [](E z1, E z2) {
+      auto t = z2.real();
+      RC_ASSERT(z1 + t == z1 + E(t));
+    });
+
+    rc::prop("mixed +: t + z == E(t) + z", [](E z1, E z2) {
+      auto t = z2.real();
+      RC_ASSERT(t + z1 == E(t) + z1);
+    });
+
+    rc::prop("mixed -: z - t == z - E(t)", [](E z1, E z2) {
+      auto t = z2.real();
+      RC_ASSERT(z1 - t == z1 - E(t));
+    });
+
+    rc::prop("mixed -: t - z == E(t) - z", [](E z1, E z2) {
+      auto t = z2.real();
+      RC_ASSERT(t - z1 == E(t) - z1);
+    });
+
+    rc::prop("mixed *: z * t == z * E(t)", [](E z1, E z2) {
+      auto t = z2.real();
+      RC_ASSERT(z1 * t == z1 * E(t));
+    });
+
+    rc::prop("mixed *: t * z == E(t) * z", [](E z1, E z2) {
+      auto t = z2.real();
+      RC_ASSERT(t * z1 == E(t) * z1);
+    });
   }
 
   /// Check the invertibility law specific to the linear augmentation field.
