@@ -74,6 +74,27 @@ TEST_CASE("Simd from array", "[simd]") {
   CHECK(z[3] == 4.0);
 }
 
+TEST_CASE("Simd from N individual values (S4d)", "[simd]") {
+  S4d z(1.0, 2.0, 3.0, 4.0);
+  CHECK(z[0] == 1.0);
+  CHECK(z[1] == 2.0);
+  CHECK(z[2] == 3.0);
+  CHECK(z[3] == 4.0);
+}
+
+TEST_CASE("Simd from N individual values (S2i)", "[simd]") {
+  S2i z(10, 20);
+  CHECK(z[0] == 10);
+  CHECK(z[1] == 20);
+}
+
+TEST_CASE("Simd scalar broadcast unaffected by N-value constructor", "[simd]") {
+  S4d b(7.0);
+  for (std::size_t i = 0; i < 4; ++i) {
+    CHECK(b[i] == 7.0);
+  }
+}
+
 // --- Basic arithmetic ---
 
 TEST_CASE("Simd addition", "[simd]") {

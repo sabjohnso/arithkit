@@ -10,6 +10,7 @@
 
 #include <array>
 #include <cmath>
+#include <concepts>
 #include <cstddef>
 #include <ostream>
 #include <utility>
@@ -32,6 +33,14 @@ namespace arithkit {
 
     explicit Simd(std::array<T, N> data)
         : data_(std::move(data)) {}
+
+    /// Construct from exactly N individual values, one per lane.
+    /// Requires sizeof...(Ts) == N; constrained away for N == 1 to avoid
+    /// ambiguity with the scalar broadcast constructor.
+    template <std::same_as<T>... Ts>
+      requires(sizeof...(Ts) == N && sizeof...(Ts) >= 2)
+    explicit Simd(Ts... values)
+        : data_{values...} {}
 
     // --- Accessors ---
 
