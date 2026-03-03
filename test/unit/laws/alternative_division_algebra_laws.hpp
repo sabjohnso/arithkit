@@ -32,6 +32,18 @@ namespace arithkit::laws {
       RC_ASSERT(a * (b * a) == (a * b) * a);
     });
 
+    rc::prop("moufang 1: a*(b*(a*c)) == (a*(b*a))*c", [](T a, T b, T c) {
+      RC_ASSERT(a * (b * (a * c)) == (a * (b * a)) * c);
+    });
+
+    rc::prop("moufang 2: ((a*b)*c)*b == a*(b*(c*b))", [](T a, T b, T c) {
+      RC_ASSERT(((a * b) * c) * b == a * (b * (c * b)));
+    });
+
+    rc::prop("moufang 3: (a*b)*(c*a) == a*((b*c)*a)", [](T a, T b, T c) {
+      RC_ASSERT((a * b) * (c * a) == a * ((b * c) * a));
+    });
+
     rc::prop("multiplicative inverse: a * (1/a) == 1 for a != 0", [](T a) {
       auto zero = identity_v<T, additive_tag>();
       auto one = identity_v<T, multiplicative_tag>();

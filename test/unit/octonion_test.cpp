@@ -227,6 +227,31 @@ TEST_CASE("Octonion division by itself", "[octonion]") {
   CHECK(result == Oq(one));
 }
 
+// --- Composition algebra properties ---
+
+TEST_CASE("Octonion norm is multiplicative", "[octonion][composition]") {
+  rc::prop("norm(a*b) == norm(a) * norm(b)", [](Oq a, Oq b) {
+    RC_ASSERT(norm(a * b) == norm(a) * norm(b));
+  });
+}
+
+TEST_CASE(
+  "Octonion conjugate is anti-automorphism", "[octonion][composition]") {
+  rc::prop("conjugate(a*b) == conjugate(b)*conjugate(a)", [](Oq a, Oq b) {
+    RC_ASSERT(conjugate(a * b) == conjugate(b) * conjugate(a));
+  });
+}
+
+TEST_CASE(
+  "Octonion conjugation-norm relationship", "[octonion][composition]") {
+  rc::prop("a * conjugate(a) == norm(a) and conjugate(a) * a == norm(a)",
+           [](Oq a) {
+             auto n = Oq(norm(a));
+             RC_ASSERT(a * conjugate(a) == n);
+             RC_ASSERT(conjugate(a) * a == n);
+           });
+}
+
 // --- Algebraic law suites ---
 
 TEST_CASE(
