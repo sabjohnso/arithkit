@@ -1,3 +1,4 @@
+#include <arithkit/concepts/monoid_augmentation.hpp>
 #include <arithkit/sparsity.hpp>
 
 #include <catch2/catch_test_macros.hpp>
@@ -17,6 +18,8 @@ using Sd = Sparsity<double>;
 // Additive inverse law fails for non-empty index sets:
 //   (v,S) + (-v,S) = (0,S) ≠ (0,∅) when S is nonempty.
 // No standard algebraic concept is claimed.
+
+static_assert(MonoidAugmentation<double, Sparsity<double>>);
 
 // --- RapidCheck generator ---
 

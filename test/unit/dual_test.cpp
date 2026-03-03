@@ -1,4 +1,5 @@
 #include <arithkit/concepts.hpp>
+#include <arithkit/concepts/linear_augmentation.hpp>
 #include <arithkit/dual.hpp>
 #include <arithkit/fraction.hpp>
 
@@ -23,6 +24,13 @@ static_assert(CommutativeRing<Dq>);
 
 // Dual is NOT a field — ε is a zero divisor (ε² = 0)
 static_assert(!Field<Dd>);
+
+static_assert(LinearAugmentation<int, Dual<int>>);
+static_assert(LinearAugmentation<double, Dual<double>>);
+static_assert(LinearAugmentationField<double, Dual<double>>);
+// Dual<T> has no operator/, so Dual<T> is not a Field and cannot
+// serve as the base scalar type of a LinearAugmentationField.
+static_assert(!LinearAugmentationField<Dual<double>, Dual<Dual<double>>>);
 
 // --- constexpr checks ---
 static_assert(Dual<int>(3, 4) + Dual<int>(1, 2) == Dual<int>(4, 6));

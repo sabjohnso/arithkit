@@ -28,6 +28,10 @@
 #include <arithkit/concepts/algebra.hpp>
 #include <arithkit/concepts/module.hpp>
 
+// Augmentation
+#include <arithkit/concepts/linear_augmentation.hpp>
+#include <arithkit/concepts/monoid_augmentation.hpp>
+
 // Auxiliary
 #include <arithkit/concepts/interval_arithmetic.hpp>
 #include <arithkit/concepts/normed.hpp>
