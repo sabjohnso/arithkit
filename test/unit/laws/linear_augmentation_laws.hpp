@@ -17,6 +17,8 @@
 #include <rapidcheck.h>
 #include <rapidcheck/catch.h>
 
+#include "approx_equal.hpp"
+
 namespace arithkit::laws {
 
   /// Check the five structural laws of the linear augmentation ring T[ε]/(ε²).
@@ -119,6 +121,36 @@ namespace arithkit::laws {
         auto inv_a = one / a;
         auto inv_du = -(v / (a * a));
         RC_ASSERT(E(a, v) * E(inv_a, inv_du) == E(one, zero));
+      });
+  }
+
+  /// Approximate variant of check_linear_augmentation_field for
+  /// floating-point base scalars where exact equality fails due to rounding.
+  ///
+  /// Ring laws are exact (integer-valued generators), so this delegates to
+  /// check_linear_augmentation_ring<T>() unchanged. Only the invertibility
+  /// law uses approximate component-wise comparison.
+  template <Field T>
+    requires std::floating_point<T>
+  void
+  check_approx_linear_augmentation_field() {
+    using E = Dual<T>;
+
+    check_linear_augmentation_ring<T>();
+
+    rc::prop(
+      "approx invertibility: Dual(a,v) * Dual(1/a,-v/a²) ≈ (1,0)",
+      [](E z1, E z2) {
+        auto a = z1.real();
+        auto v = z2.real();
+        auto zero = identity_v<T, additive_tag>();
+        auto one = identity_v<T, multiplicative_tag>();
+        RC_PRE(a != zero);
+        auto inv_a = one / a;
+        auto inv_du = -(v / (a * a));
+        auto result = E(a, v) * E(inv_a, inv_du);
+        RC_ASSERT(approx_equal(result.real(), one));
+        RC_ASSERT(approx_equal(result.dual(), zero));
       });
   }
 

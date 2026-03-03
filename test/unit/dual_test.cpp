@@ -27,7 +27,9 @@ static_assert(!Field<Dd>);
 
 static_assert(LinearAugmentation<int, Dual<int>>);
 static_assert(LinearAugmentation<double, Dual<double>>);
+static_assert(LinearAugmentation<Fraction<int>, Dual<Fraction<int>>>);
 static_assert(LinearAugmentationField<double, Dual<double>>);
+static_assert(LinearAugmentationField<Fraction<int>, Dual<Fraction<int>>>);
 // Dual<T> has no operator/, so Dual<T> is not a Field and cannot
 // serve as the base scalar type of a LinearAugmentationField.
 static_assert(!LinearAugmentationField<Dual<double>, Dual<Dual<double>>>);
@@ -171,6 +173,12 @@ TEST_CASE("Dual<Fraction<int>> satisfies CommutativeRing laws",
 TEST_CASE(
   "Dual<int> satisfies LinearAugmentation ring laws", "[laws][dual]") {
   arithkit::laws::check_linear_augmentation_ring<int>();
+}
+
+TEST_CASE(
+  "Dual<double> satisfies LinearAugmentation field laws (approx)",
+  "[laws][dual]") {
+  arithkit::laws::check_approx_linear_augmentation_field<double>();
 }
 
 TEST_CASE(
