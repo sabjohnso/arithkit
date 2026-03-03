@@ -16,6 +16,8 @@ include(arithkit_deps)
 
 add_subdirectory(src)
 
+add_subdirectory(examples)
+
 if(arithkit_BUILD_TESTING)
   include(CTest)
   if(BUILD_TESTING)
