@@ -7,6 +7,8 @@
 #include <rapidcheck.h>
 #include <rapidcheck/catch.h>
 
+#include "laws/affine_arithmetic_laws.hpp"
+
 using Catch::Approx;
 using namespace arithkit;
 
@@ -133,46 +135,9 @@ TEST_CASE("Affine division by constant", "[affine]") {
   CHECK(c.to_interval().hi() == Approx(5.0));
 }
 
-// --- Property tests: containment ---
+// --- Property tests: affine arithmetic laws ---
 
-TEST_CASE("Affine addition containment", "[laws][affine]") {
-  rc::prop("affine addition contains midpoint sum", [](Ad X, Ad Y) {
-    auto x = X.center();
-    auto y = Y.center();
-    auto result = X + Y;
-    RC_ASSERT(result.to_interval().contains(x + y));
-  });
-}
-
-TEST_CASE("Affine subtraction containment", "[laws][affine]") {
-  rc::prop(
-    "affine subtraction contains midpoint diff", [](Ad X, Ad Y) {
-      auto x = X.center();
-      auto y = Y.center();
-      auto result = X - Y;
-      RC_ASSERT(result.to_interval().contains(x - y));
-    });
-}
-
-TEST_CASE("Affine multiplication containment", "[laws][affine]") {
-  rc::prop(
-    "affine multiplication contains midpoint product", [](Ad X, Ad Y) {
-      auto x = X.center();
-      auto y = Y.center();
-      auto result = X * Y;
-      RC_ASSERT(result.to_interval().contains(x * y));
-    });
-}
-
-TEST_CASE("Affine bounds are tighter than or equal to interval",
+TEST_CASE("Affine<double> satisfies affine arithmetic laws",
           "[laws][affine]") {
-  rc::prop(
-    "affine interval subset of naive interval", [](Ad X, Ad Y) {
-      auto xiv = X.to_interval();
-      auto yiv = Y.to_interval();
-      auto affine_result = (X + Y).to_interval();
-      auto interval_result = xiv + yiv;
-      // Affine result should be subset (or equal) to interval result
-      RC_ASSERT(affine_result.is_subset_of(interval_result));
-    });
+  arithkit::laws::check_affine_arithmetic<double>();
 }

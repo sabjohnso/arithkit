@@ -6,6 +6,8 @@
 #include <rapidcheck.h>
 #include <rapidcheck/catch.h>
 
+#include "laws/interval_arithmetic_laws.hpp"
+
 using Catch::Approx;
 using namespace arithkit;
 
@@ -138,39 +140,9 @@ TEST_CASE("Interval midpoint", "[interval]") {
   CHECK(Ivd(-4.0, 2.0).midpoint() == Approx(-1.0));
 }
 
-// --- Property tests: containment ---
+// --- Property tests: interval arithmetic laws ---
 
-TEST_CASE("Interval addition containment", "[laws][interval]") {
-  rc::prop("x in X, y in Y => x+y in X+Y", [](Ivd X, Ivd Y) {
-    auto x = X.midpoint();
-    auto y = Y.midpoint();
-    auto result = X + Y;
-    RC_ASSERT(result.contains(x + y));
-  });
-}
-
-TEST_CASE("Interval multiplication containment", "[laws][interval]") {
-  rc::prop("x in X, y in Y => x*y in X*Y", [](Ivd X, Ivd Y) {
-    auto x = X.midpoint();
-    auto y = Y.midpoint();
-    auto result = X * Y;
-    RC_ASSERT(result.contains(x * y));
-  });
-}
-
-TEST_CASE("Interval subtraction containment", "[laws][interval]") {
-  rc::prop("x in X, y in Y => x-y in X-Y", [](Ivd X, Ivd Y) {
-    auto x = X.midpoint();
-    auto y = Y.midpoint();
-    auto result = X - Y;
-    RC_ASSERT(result.contains(x - y));
-  });
-}
-
-TEST_CASE("Interval subdistributivity", "[laws][interval]") {
-  rc::prop("X*(Y+Z) subset X*Y + X*Z", [](Ivd X, Ivd Y, Ivd Z) {
-    auto lhs = X * (Y + Z);
-    auto rhs = X * Y + X * Z;
-    RC_ASSERT(lhs.is_subset_of(rhs));
-  });
+TEST_CASE("Interval<double> satisfies interval arithmetic laws",
+          "[laws][interval]") {
+  arithkit::laws::check_interval_arithmetic<double>();
 }

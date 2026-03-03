@@ -5,6 +5,7 @@
 #include <rapidcheck.h>
 #include <rapidcheck/catch.h>
 
+#include "laws/grassmann_algebra_laws.hpp"
 #include "laws/ring_laws.hpp"
 
 using namespace arithkit;
@@ -158,4 +159,19 @@ TEST_CASE("Grassmann<2> satisfies Ring laws", "[laws][grassmann]") {
 
 TEST_CASE("Grassmann<3> satisfies Ring laws", "[laws][grassmann]") {
   arithkit::laws::check_ring<G3>();
+}
+
+TEST_CASE("Grassmann<1> satisfies Grassmann algebra laws",
+          "[laws][grassmann]") {
+  arithkit::laws::check_grassmann_algebra<double, 1>();
+}
+
+TEST_CASE("Grassmann<2> satisfies Grassmann algebra laws",
+          "[laws][grassmann]") {
+  arithkit::laws::check_grassmann_algebra<double, 2>();
+}
+
+TEST_CASE("Grassmann<3> satisfies Grassmann algebra laws",
+          "[laws][grassmann]") {
+  arithkit::laws::check_grassmann_algebra<double, 3>();
 }

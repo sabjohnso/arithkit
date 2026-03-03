@@ -5,6 +5,7 @@
 #include <rapidcheck.h>
 #include <rapidcheck/catch.h>
 
+#include "laws/clifford_algebra_laws.hpp"
 #include "laws/ring_laws.hpp"
 
 using namespace arithkit;
@@ -182,4 +183,20 @@ TEST_CASE("Cl(0,2) satisfies Ring laws", "[laws][clifford]") {
 
 TEST_CASE("Cl(2,0) satisfies Ring laws", "[laws][clifford]") {
   arithkit::laws::check_ring<Cl20>();
+}
+
+TEST_CASE("Cl(0,1) satisfies Clifford algebra laws", "[laws][clifford]") {
+  arithkit::laws::check_clifford_algebra<double, 0, 1>();
+}
+
+TEST_CASE("Cl(1,0) satisfies Clifford algebra laws", "[laws][clifford]") {
+  arithkit::laws::check_clifford_algebra<double, 1, 0>();
+}
+
+TEST_CASE("Cl(0,2) satisfies Clifford algebra laws", "[laws][clifford]") {
+  arithkit::laws::check_clifford_algebra<double, 0, 2>();
+}
+
+TEST_CASE("Cl(2,0) satisfies Clifford algebra laws", "[laws][clifford]") {
+  arithkit::laws::check_clifford_algebra<double, 2, 0>();
 }

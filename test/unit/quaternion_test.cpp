@@ -7,6 +7,7 @@
 #include <rapidcheck.h>
 #include <rapidcheck/catch.h>
 
+#include "laws/composition_algebra_laws.hpp"
 #include "laws/division_ring_laws.hpp"
 
 using namespace arithkit;
@@ -154,4 +155,10 @@ TEST_CASE("Quaternion division by itself", "[quaternion]") {
 TEST_CASE("Quaternion<Fraction<BigInt>> satisfies DivisionRing laws",
           "[laws][quaternion]") {
   arithkit::laws::check_division_ring<Qq>();
+}
+
+TEST_CASE(
+  "Quaternion<Fraction<BigInt>> satisfies composition algebra laws",
+  "[laws][quaternion][composition]") {
+  arithkit::laws::check_composition_algebra<BigQ, Qq>();
 }
