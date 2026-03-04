@@ -15,7 +15,8 @@ set(examples
   modular_arithmetic
   higher_order_ad
   polynomial_ops
-  fixed_point_filter)
+  fixed_point_filter
+  linear_transforms)
 
 foreach(example ${examples})
   add_executable(${example} ${example}.cpp)
