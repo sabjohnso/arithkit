@@ -11,7 +11,11 @@ set(examples
   oriented_geometry
   batch_polynomial
   sparsity_detection
-  composition_algebra)
+  composition_algebra
+  modular_arithmetic
+  higher_order_ad
+  polynomial_ops
+  fixed_point_filter)
 
 foreach(example ${examples})
   add_executable(${example} ${example}.cpp)
