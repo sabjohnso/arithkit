@@ -1,3 +1,6 @@
+#include <arithkit/concepts/commutative_magma_augmentation.hpp>
+#include <arithkit/concepts/commutative_magma_with_identity_augmentation.hpp>
+#include <arithkit/concepts/magma_augmentation.hpp>
 #include <arithkit/concepts/monoid_augmentation.hpp>
 #include <arithkit/sparsity.hpp>
 
@@ -19,6 +22,9 @@ using Sd = Sparsity<double>;
 //   (v,S) + (-v,S) = (0,S) ≠ (0,∅) when S is nonempty.
 // No standard algebraic concept is claimed.
 
+static_assert(MagmaAugmentation<double, Sparsity<double>>);
+static_assert(CommutativeMagmaAugmentation<double, Sparsity<double>>);
+static_assert(CommutativeMagmaWithIdentityAugmentation<double, Sparsity<double>>);
 static_assert(MonoidAugmentation<double, Sparsity<double>>);
 
 // --- RapidCheck generator ---

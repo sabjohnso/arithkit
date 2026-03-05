@@ -32,7 +32,10 @@
 #include <arithkit/concepts/module.hpp>
 
 // Augmentation
+#include <arithkit/concepts/commutative_magma_augmentation.hpp>
+#include <arithkit/concepts/commutative_magma_with_identity_augmentation.hpp>
 #include <arithkit/concepts/linear_augmentation.hpp>
+#include <arithkit/concepts/magma_augmentation.hpp>
 #include <arithkit/concepts/monoid_augmentation.hpp>
 
 // Auxiliary
